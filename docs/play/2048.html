@@ -16,8 +16,8 @@
   .box { background:var(--panel); border-radius:8px; padding:6px 14px; text-align:center; min-width:70px; }
   .box small { display:block; color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
   .box b { font-size:20px; }
-  #board { position:relative; background:var(--panel); border-radius:12px; padding:10px; aspect-ratio:1;
-           display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(4,1fr); gap:10px; }
+  #board { position:relative; background:var(--panel); border-radius:12px; padding:10px; aspect-ratio:1; display:flex; }
+  #grid { flex:1; min-width:0; min-height:0; display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(4,1fr); gap:10px; }
   .cell { min-width:0; min-height:0; background:var(--cell); border-radius:8px; display:grid; place-items:center; font-weight:800;
           font-size:clamp(20px,7vw,34px); transition:background .08s; }
   .v2{background:#3b4252}.v4{background:#434c5e}.v8{background:#d08770;color:#fff}.v16{background:#d9774f;color:#fff}
@@ -35,9 +35,9 @@
 <main>
   <header>
     <h1>2048</h1>
-    <div class="scores"><div class="box"><small>score</small><b id="score">0</b></div><div class="box"><small>best</small><b id="best">0</b></div></div>
+    <div class="scores" aria-live="polite" aria-atomic="true"><div class="box"><small>score</small><b id="score">0</b></div><div class="box"><small>best</small><b id="best">0</b></div></div>
   </header>
-  <div id="board"><div id="msg"><h2 id="msgtitle"></h2><div><button id="keep">Keep playing</button> <button id="again">New game</button></div></div></div>
+  <div id="board"><div id="grid" role="img" aria-label="2048 board" tabindex="-1"></div><div id="msg"><h2 id="msgtitle" tabindex="-1"></h2><div><button id="keep">Keep playing</button> <button id="again">New game</button></div></div></div>
   <p>Arrow keys, WASD or swipe. A rebuild checked against recordings of the original: <code>rea-games verify 2048</code>.</p>
   <button id="restart">New game</button>
 </main>
@@ -154,9 +154,10 @@ return { SIZE, Game2048 };
 
 const { Game2048, SIZE } = __mod0;
 const game = new Game2048();
-const board = document.getElementById("board");
+const grid = document.getElementById("grid");
 const cells = [];
-for (let y = 0; y < SIZE; y++) for (let x = 0; x < SIZE; x++) { const c = document.createElement("div"); c.className = "cell"; board.append(c); cells.push([x, y, c]); }
+for (let y = 0; y < SIZE; y++) for (let x = 0; x < SIZE; x++) { const c = document.createElement("div"); c.className = "cell"; grid.append(c); cells.push([x, y, c]); }
+let wasTerminated = false;
 function draw() {
   const s = game.snapshot();
   for (const [x, y, c] of cells) { const v = s.grid[x][y]; c.textContent = v || ""; c.className = "cell" + (v ? " " + (v <= 2048 ? "v" + v : "vbig") : ""); }
@@ -165,6 +166,10 @@ function draw() {
   msg.classList.toggle("on", s.terminated);
   msgtitle.textContent = s.over ? "Game over" : "You made 2048";
   keep.style.display = s.over ? "none" : "";
+  if (s.terminated !== wasTerminated) {
+    if (s.terminated) msgtitle.focus(); else grid.focus();
+    wasTerminated = s.terminated;
+  }
 }
 const key = { ArrowUp:0, w:0, ArrowRight:1, d:1, ArrowDown:2, s:2, ArrowLeft:3, a:3 };
 addEventListener("keydown", (e) => { if (e.key in key) { e.preventDefault(); game.move(key[e.key]); draw(); } });
