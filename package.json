@@ -1,5 +1,5 @@
 {
-  "name": "rea-game",
+  "name": "rea-games",
   "version": "1.0.0",
   "description": "Reverse-engineer any game: record the original's behavior, rebuild it in any engine, and prove the rebuild plays the same, frame by frame.",
   "keywords": [
@@ -14,20 +14,20 @@
     "agent-skill",
     "verification"
   ],
-  "homepage": "https://github.com/erkamyaman/rea-game#readme",
+  "homepage": "https://github.com/erkamyaman/rea-games#readme",
   "bugs": {
-    "url": "https://github.com/erkamyaman/rea-game/issues"
+    "url": "https://github.com/erkamyaman/rea-games/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/erkamyaman/rea-game.git"
+    "url": "git+https://github.com/erkamyaman/rea-games.git"
   },
   "author": "Erkam Yaman (https://github.com/erkamyaman)",
   "funding": "https://github.com/sponsors/erkamyaman",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "rea-game": "bin/rea-game.mjs"
+    "rea-games": "bin/rea-games.mjs"
   },
   "files": [
     "bin/",
@@ -45,7 +45,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "verify": "node bin/rea-game.mjs verify all",
-    "test": "node bin/rea-game.mjs verify all"
+    "verify": "node bin/rea-games.mjs verify all",
+    "test": "node bin/rea-games.mjs verify all"
   }
 }

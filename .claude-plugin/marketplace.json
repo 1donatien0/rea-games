@@ -1,9 +1,9 @@
 {
-  "name": "rea-game",
-  "owner": { "name": "rea-game contributors" },
+  "name": "rea-games",
+  "owner": { "name": "rea-games contributors" },
   "plugins": [
     {
-      "name": "rea-game",
+      "name": "rea-games",
       "source": "./",
       "description": "Reverse-engineer a game, rebuild it in any engine, prove it matches."
     }
