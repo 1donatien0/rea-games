@@ -1,0 +1,9 @@
+{
+  "name": "dino",
+  "title": "Chrome Dino",
+  "original": { "repo": "chromium t-rex runner (extract by @liuwayong)", "license": "BSD-3-Clause", "path": "originals/dino" },
+  "record": "record.mjs",
+  "ports": {
+    "web": { "cmd": ["node", "ports/web/run.mjs"], "play": "ports/web/index.html" }
+  }
+}
