@@ -43,7 +43,7 @@ Open one file, no install. Each is written from a behavior spec (`GAME.md`), dra
 | Game | Original | Play | Verified |
 |---|---|---|---|
 | 2048 | [gabrielecirulli/2048](https://github.com/gabrielecirulli/2048), MIT | `docs/play/2048.html` | 19 cases, 24,044 inputs: web, Rust and Godot ports |
-| Dino | Chrome's offline dinosaur ([copy](https://github.com/wayou/t-rex-runner), BSD-3) | `docs/play/dino.html` | 29 cases, 63,000 frames: web port |
+| Dino | Chrome's offline dinosaur ([copy](https://github.com/wayou/t-rex-runner), BSD-3) | `docs/play/dino.html` | 29 cases, 63,000 frames: web, Godot and Rust (Bevy) ports |
 | Canvas Bird | [giotiskl/Canvas-Bird](https://github.com/giotiskl/Canvas-Bird), MIT | `docs/play/canvas-bird.html` | 30 cases, 68,409 frames: web port |
 
 ## How it works
@@ -66,6 +66,8 @@ $ node bin/rea-game.mjs verify all
 2048 / godot        => 19/19 cases identical, 24044 inputs
 canvas-bird / web   => 30/30 cases identical, 68409 inputs
 dino / web          => 29/29 cases identical, 63000 inputs
+dino / godot        => 29/29 cases identical, 63000 inputs
+dino / bevy         => 29/29 cases identical, 63000 inputs
 ```
 
 A check that cannot fail proves nothing, so each port was also broken on purpose (a constant, a collision offset, a timing gate, a spawn-gap factor): `verify` failed each time, for example 5 of 30 Canvas Bird cases pass with the 30 fps gate changed, 3 of 19 for 2048 with the spawn odds changed from 0.9 to 0.8.
@@ -96,8 +98,8 @@ Needs Node 22. Browser games also need Playwright with Chromium; the Rust 2048 p
 | Target | Status |
 |---|---|
 | Web (canvas, one HTML file, mobile friendly) | all three games, verified |
-| Rust | 2048, verified through the same runner. Bevy-ready logic |
-| Godot 4.4 (GDScript) | 2048, verified: a headless runner passes all 19 cases. A playable scene (`ports/godot/main.tscn`) loads and takes input in a headless smoke test; its look has not been checked |
+| Rust | 2048, and Dino as a Bevy project (`dino-core` logic verified through `dino-runner`; the Bevy window itself compiles and ran 25 s under Xvfb, never played) |
+| Godot 4.4 (GDScript) | 2048 and Dino, verified: a headless runner passes all 19 cases. A playable scene (`ports/godot/main.tscn`) loads and takes input in a headless smoke test; its look has not been checked |
 | Unity (C#) | not started |
 | Capacitor (wrap the web build for iOS/Android) | not started; Capacitor wraps a web build, so it builds on the web ports |
 

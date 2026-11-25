@@ -11,6 +11,8 @@ was written (Linux container, Node 22, Chromium from Playwright). Nothing here w
 | 2048 | Rust | 19 | 24,044 inputs | all identical |
 | 2048 | Godot 4.4.1 (GDScript, headless) | 19 | 24,044 inputs | all identical |
 | Dino | web (JS) | 29 | 63,000 frames | all identical, exact comparison |
+| Dino | Godot 4.4.1 (GDScript, headless) | 29 | 63,000 frames | all identical, exact comparison |
+| Dino | Rust (`dino-core` through `dino-runner`) | 29 | 63,000 frames | all identical, exact comparison |
 | Canvas Bird | web (JS) | 30 | 68,409 frames | all identical, exact comparison |
 
 Comparison is exact (no rounding, no tolerance) and also requires the port to use exactly the recorded random numbers.
@@ -27,6 +29,11 @@ other seeds for clouds, stars and blinking; traces and tapes were identical.
 `docs/play/*.html` are single files made by `node scripts/bundle.mjs`. 2048 was opened from `file://` in headless
 Chromium without console errors and played a few moves. Dino and Canvas Bird pages were loaded at desktop and phone width
 by their authors with no errors; they have not been played by a person.
+
+## Dino engine ports: what is and is not proven
+
+- Godot: logic and runner verified. Godot's JSON parser is off by one digit on some decimals, so the runner reads the case text itself. Breaking gravity failed every case. Replacing the JS-style `round` with Godot's own still passed 29/29: the recordings never hit a negative `.5` tie, so that rounding is correct by construction but not covered. The scene was run headless only; nobody looked at it.
+- Rust/Bevy: `dino-core` through `dino-runner` verified (gravity, pterodactyl speed and rounding breaks all failed). The Bevy front end (`dino-bevy`, Bevy 0.19.1, 2D only, score in the window title) compiles and ran 25 s under Xvfb with software rendering without a panic; frames were not looked at and keys, jump, duck and restart were not tried. Bevy 0.20.1 needs a newer rustc than the build machine had. Building `dino-runner` does not compile Bevy; running or checking `dino-bevy` needs system packages (Wayland, udev, xkbcommon, Vulkan drivers on Linux).
 
 ## Gaps (read before quoting any number)
 
