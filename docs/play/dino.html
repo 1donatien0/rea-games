@@ -36,6 +36,7 @@
 </main>
 <script>
 (() => {
+const __mod0 = (() => {
 // Chrome Dino gameplay, rebuilt from games/dino/GAME.md. Pure logic: no DOM, no clock, no Math.random.
 //   rng()  returns the next gameplay random number in [0, 1) (the recorded tape, or Math.random)
 //   step({dt, jump, duck, jumpUp, duckUp, enter, animEnd})  one browser frame:
@@ -485,8 +486,10 @@ class Dino {
   }
 }
 
+return { WIDTH, HEIGHT, Dino };
+})();
 
-
+const { Dino } = __mod0;
 (function main() {
   const STEP = 1000 / 60;      // the rules are stepped at 60 Hz whatever the screen does
   const INTRO_MS = 400;        // length of the intro animation, as in the recording
