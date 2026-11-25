@@ -19,11 +19,32 @@ case "differed". Compare parsed values (`lib/compare.mjs`), never `JSON.stringif
 Replace only the file name in the sums line, and look at a new workflow's log for the `verify` output, not just its
 colour.
 
+**A deliberate break crashed the port instead of failing the check.** Breaking Bricks three ways first showed
+`port exited 1` for every case, and one of the three edits had left a name undefined, so that failure proved nothing about
+`verify`. Read the reason for each failure: a broken port should fail with `trace differs at ...` or a tape count, not an
+error from the edit itself.
+
+**A play page drew nothing after bundling.** `scripts/bundle.mjs` takes a module's exports from the first name on each
+`export const` line, so `export const W = 640, H = 480` exported `W` only, `H` was `undefined` in `docs/play/paddles.html`
+and the canvas had no height, with no error. Export one name per line, and open the bundled page, not only `ports/web`.
+
+**`in` found keys the port never printed.** `firstDiff` checked `k in a`, which is true for inherited names, so a port
+that printed a `constructor` key was reported as `.constructor: undefined != 1` instead of a missing key. Check own keys
+with `Object.hasOwn`; `test/compare.test.mjs` covers it.
+
+**One failing build hid every other result.** The exception from a port's build ended `verify all`, so on a machine
+without cargo nothing after `2048 / bevy` was checked and there was no summary. A port that cannot run is that port's
+failure (`verifyGames` in `lib/verify.mjs`); the run goes on and ends with one line per port.
+
 **A check that cannot fail looks like a pass.** After a port is green, break it three ways (a constant, a branch, an
 offset) and watch `verify` fail each time; otherwise the cases may not reach the code you think they do.
+
+**A port rename left stale references behind.** The plain-Rust 2048 runner was replaced by the Bevy port, but
+CONTRIBUTING.md, the `verify` help text and the `package.json` exclusions still named the `rust` port. When a port is
+replaced, grep for the old port name across docs, help text and packaging lists in the same change.
 
 **The bundler dropped every name after the first in a multi-name export.** `export const W = 10, H = 20;` came out of
 `scripts/bundle.mjs` as a module returning `W` only, so `docs/play/blocks.html` read `H` as `undefined` and the board
 never drew its settled cells or grid lines. `verify` stayed green because it replays the logic, not the published page.
-`scripts/exported-names.mjs` keeps every binding (commas count only at depth zero) and `node --test scripts/*.test.mjs`
+`scripts/exported-names.mjs` keeps every binding (commas count only at depth zero) and `npm test`
 checks it; after regenerating `docs/play/`, open the changed pages and look at them.

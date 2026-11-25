@@ -1,8 +1,8 @@
-// Run with: node --test scripts/*.test.mjs
+// Run with: npm test
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { exportedNames } from "./exported-names.mjs";
+import { exportedNames } from "../scripts/exported-names.mjs";
 
 test("every binding of a multi-name export is kept", () => {
   assert.deepEqual(exportedNames("export const W = 10, H = 20;\n"), ["W", "H"]);
