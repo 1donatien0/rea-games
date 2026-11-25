@@ -14,6 +14,8 @@ was written (Linux container, Node 22, Chromium from Playwright). Nothing here w
 | Dino | Godot 4.4.1 (GDScript, headless) | 29 | 63,000 frames | all identical, exact comparison |
 | Dino | Rust (`dino-core` through `dino-runner`) | 29 | 63,000 frames | all identical, exact comparison |
 | Canvas Bird | web (JS) | 30 | 68,409 frames | all identical, exact comparison |
+| Canvas Bird | Godot 4.4.1 (GDScript, headless) | 30 | 68,409 frames | all identical, exact comparison |
+| Canvas Bird | Rust (`bird-core` through `bird-runner`) | 30 | 68,409 frames | all identical, exact comparison |
 
 Comparison is exact (no rounding, no tolerance) and also requires the port to use exactly the recorded random numbers.
 
@@ -34,6 +36,11 @@ by their authors with no errors; they have not been played by a person.
 
 - Godot: logic and runner verified. Godot's JSON parser is off by one digit on some decimals, so the runner reads the case text itself. Breaking gravity failed every case. Replacing the JS-style `round` with Godot's own still passed 29/29: the recordings never hit a negative `.5` tie, so that rounding is correct by construction but not covered. The scene was run headless only; nobody looked at it.
 - Rust/Bevy: `dino-core` through `dino-runner` verified (gravity, pterodactyl speed and rounding breaks all failed). The Bevy front end (`dino-bevy`, Bevy 0.19.1, 2D only, score in the window title) compiles and ran 25 s under Xvfb with software rendering without a panic; frames were not looked at and keys, jump, duck and restart were not tried. Bevy 0.20.1 needs a newer rustc than the build machine had. Building `dino-runner` does not compile Bevy; running or checking `dino-bevy` needs system packages (Wayland, udev, xkbcommon, Vulkan drivers on Linux).
+
+## Canvas Bird engine ports: what is and is not proven
+
+- Godot: verified. Breaking force, jump speed and the hit-box offset made 2, 6 and 16 of 30 cases pass. Narrowing the hit window by one pixel still passed: pipes always sit at x = 1 mod 3, so that boundary is never reached by any recording (an equivalent mutant, not a check failure). The runner rebuilds JavaScript's shortest-digit number text; one tiny exponent-form value in the recording relies on Godot's own `to_float`, and it matches. The scene was smoke-tested headless only.
+- Rust/Bevy: `bird-core` through `bird-runner` verified (force, fall limit and gap breaks all failed; the same hit-window mutant survives for the same reason). The Bevy window (0.19.1) compiles and ran 20 s under Xvfb without a crash; nobody looked at it or played it. Score is shown in the window title.
 
 ## Gaps (read before quoting any number)
 
