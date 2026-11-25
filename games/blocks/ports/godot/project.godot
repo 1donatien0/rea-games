@@ -1,0 +1,10 @@
+; Engine configuration file. Headless runner for the rea-games check, and the playable scene.
+config_version=5
+
+[application]
+config/name="rea-blocks"
+run/main_scene="res://main.tscn"
+
+[display]
+window/size/viewport_width=360
+window/size/viewport_height=520
