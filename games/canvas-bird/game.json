@@ -15,6 +15,16 @@
       ],
       "play": "ports/web/index.html"
     },
+    "godot": {
+      "cmd": [
+        "godot",
+        "--headless",
+        "--path",
+        "ports/godot",
+        "--script",
+        "runner.gd"
+      ]
+    },
     "bevy": {
       "build": [
         "cargo",

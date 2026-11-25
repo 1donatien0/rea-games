@@ -1,0 +1,10 @@
+; Engine configuration file. Headless runner for the rea-game check, and the playable scene.
+config_version=5
+
+[application]
+config/name="rea-canvas-bird"
+run/main_scene="res://main.tscn"
+
+[display]
+window/size/viewport_width=640
+window/size/viewport_height=480
