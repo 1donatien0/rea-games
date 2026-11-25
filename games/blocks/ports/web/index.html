@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Blocks · rea-games</title>
+<style>
+  :root { --bg:#14161c; --panel:#20242e; --cell:#1a1d26; --text:#e8eaf0; --muted:#8b93a7; --accent:#ff7a45; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:var(--bg); color:var(--text);
+         font:16px/1.4 system-ui,sans-serif; touch-action:manipulation; user-select:none; -webkit-user-select:none; }
+  main { width:min(100% - 24px, 460px); padding:14px 0; }
+  header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; gap:12px; }
+  h1 { margin:0; font-size:34px; letter-spacing:-1px; }
+  header span { color:var(--muted); font-size:13px; text-align:right; }
+  #stage { display:grid; grid-template-columns:minmax(0,1fr) 120px; gap:12px; align-items:start; }
+  #court { position:relative; background:var(--panel); border-radius:12px; padding:8px; }
+  canvas { display:block; width:100%; height:auto; border-radius:6px; background:var(--cell); }
+  #msg { position:absolute; inset:8px; border-radius:6px; background:rgba(20,22,28,.78); display:grid; place-content:center;
+         text-align:center; gap:10px; cursor:pointer; padding:12px; }
+  #msg.off { display:none; }
+  #msg h2 { margin:0; font-size:26px; }
+  #msg p { margin:0; color:var(--muted); font-size:14px; }
+  aside { display:grid; gap:10px; }
+  .box { background:var(--panel); border-radius:10px; padding:8px 10px; text-align:center; }
+  .box small { display:block; color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+  .box b { font-size:22px; font-variant-numeric:tabular-nums; }
+  #nextc { width:100%; background:transparent; }
+  button { background:var(--accent); color:#fff; border:0; border-radius:10px; padding:10px 14px; font:inherit; font-weight:700; cursor:pointer; }
+  button:active { filter:brightness(.85); }
+  #pad { display:none; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px; }
+  #pad button { padding:16px 0; font-size:22px; background:var(--panel); color:var(--text); touch-action:none; }
+  @media (pointer: coarse) { #pad { display:grid; } }
+  p.keys { margin:12px 2px 0; color:var(--muted); font-size:14px; }
+  kbd { background:var(--panel); border-radius:5px; padding:1px 7px; font:inherit; font-weight:600; color:var(--text); }
+</style>
+</head>
+<body>
+<main>
+  <header><h1>Blocks</h1><span>own art &middot; rules rebuilt from the recording</span></header>
+  <div id="stage">
+    <div id="court">
+      <canvas id="c" width="300" height="600" aria-label="Blocks game"></canvas>
+      <div id="msg"><h2 id="msgtitle">Blocks</h2><p id="msgsub">Press Space or tap to play</p></div>
+    </div>
+    <aside>
+      <div class="box"><small>next</small><canvas id="nextc" width="100" height="100"></canvas></div>
+      <div class="box"><small>score</small><b id="score">0</b></div>
+      <div class="box"><small>rows</small><b id="rows">0</b></div>
+      <div class="box"><small>best</small><b id="best">0</b></div>
+      <button id="restart" type="button">New game</button>
+    </aside>
+  </div>
+  <div id="pad">
+    <button type="button" data-k="left" aria-label="left">&larr;</button>
+    <button type="button" data-k="up" aria-label="rotate">&#8635;</button>
+    <button type="button" data-k="down" aria-label="down">&darr;</button>
+    <button type="button" data-k="right" aria-label="right">&rarr;</button>
+  </div>
+  <p class="keys"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> move &middot; <kbd>&uarr;</kbd> rotate &middot; <kbd>&darr;</kbd> drop a row &middot; <kbd>Esc</kbd> give up &middot; <kbd>Space</kbd> play. Fill whole rows to clear them; the pieces fall faster as your rows grow.</p>
+</main>
+<script type="module">
+import { Blocks, W, H, cellsOf } from "./blocks.mjs";
+
+(function main() {
+  const STEP = 1000 / 60;      // the rules are stepped at 60 Hz whatever the screen does
+  const COLORS = { i: "#4fd1e8", j: "#5b7cfa", l: "#ff9f43", o: "#f7d046", s: "#5fd068", t: "#b565e8", z: "#f0544f" };
+  const cv = document.getElementById("c"), ctx = cv.getContext("2d");
+  const nv = document.getElementById("nextc"), nctx = nv.getContext("2d");
+  const CELL = cv.width / W; // 30
+  const $ = (id) => document.getElementById(id);
+
+  // ---- game (a recorded tape replaces Math.random when a driver sets window.__tape)
+  const TAPE = Array.isArray(window.__tape) ? window.__tape : null;
+  let used = 0;
+  const rng = TAPE ? () => { if (used >= TAPE.length) throw new Error("tape used up"); return TAPE[used++]; } : Math.random;
+  const game = new Blocks({ rng, clock0: TAPE ? 1000000 : Math.floor(performance.now()) });
+  let best = 0;
+  try { best = +localStorage.getItem("blocks-best") || 0; } catch {}
+  let keys = [];
+  let started = false, over = false;
+
+  function press(k) { keys.push(k); }
+  function tick(dt = STEP) {
+    const wasPlaying = game.playing;
+    game.step({ dt, keys });
+    keys = [];
+    if (wasPlaying && !game.playing) { over = true; remember(); }
+    if (game.playing) { started = true; over = false; }
+  }
+  function remember() {
+    if (game.score > best) { best = game.score; try { localStorage.setItem("blocks-best", String(best)); } catch {} }
+  }
+
+  // ---- drawing: flat squares with a light top edge, no textures
+  function square(c, x, y, size, color, alpha = 1) {
+    c.globalAlpha = alpha;
+    c.fillStyle = color; c.beginPath(); c.roundRect(x + 1, y + 1, size - 2, size - 2, 5); c.fill();
+    c.fillStyle = "rgba(255,255,255,.22)"; c.fillRect(x + 4, y + 3, size - 8, 3);
+    c.globalAlpha = 1;
+  }
+  function draw() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.strokeStyle = "rgba(255,255,255,.05)"; ctx.lineWidth = 1;
+    for (let x = 1; x < W; x++) { ctx.beginPath(); ctx.moveTo(x * CELL + .5, 0); ctx.lineTo(x * CELL + .5, cv.height); ctx.stroke(); }
+    for (let y = 1; y < H; y++) { ctx.beginPath(); ctx.moveTo(0, y * CELL + .5); ctx.lineTo(cv.width, y * CELL + .5); ctx.stroke(); }
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const k = game.grid[y][x]; if (k) square(ctx, x * CELL, y * CELL, CELL, COLORS[k]); }
+    const c = game.cur;
+    if (game.playing) {
+      let gy = c.y; while (!game.blocked(c.type, c.x, gy + 1, c.dir)) gy++; // where it would land
+      if (gy !== c.y) for (const [x, y] of cellsOf(c.type, c.x, gy, c.dir)) square(ctx, x * CELL, y * CELL, CELL, COLORS[c.type], .22);
+      for (const [x, y] of cellsOf(c.type, c.x, c.y, c.dir)) square(ctx, x * CELL, y * CELL, CELL, COLORS[c.type]);
+    }
+    // next piece, centred in a 5x5 preview
+    nctx.clearRect(0, 0, nv.width, nv.height);
+    const n = game.nxt, u = nv.width / 5, pad = (5 - 4) / 2;
+    const cs = cellsOf(n.type, 0, 0, 0);
+    const minx = Math.min(...cs.map((q) => q[0])), maxx = Math.max(...cs.map((q) => q[0])), miny = Math.min(...cs.map((q) => q[1])), maxy = Math.max(...cs.map((q) => q[1]));
+    const ox = (5 - (maxx - minx + 1)) / 2 - minx, oy = (5 - (maxy - miny + 1)) / 2 - miny;
+    for (const [x, y] of cs) square(nctx, (x + ox) * u, (y + oy) * u, u, COLORS[n.type]);
+    void pad;
+    $("score").textContent = String(Math.floor(game.vscore));
+    $("rows").textContent = String(game.rows);
+    $("best").textContent = String(Math.max(best, game.score));
+    const msg = $("msg");
+    msg.classList.toggle("off", !!game.playing);
+    if (!game.playing) {
+      $("msgtitle").textContent = over ? "Game over" : "Blocks";
+      $("msgsub").textContent = (over ? game.score + " points, " + game.rows + " rows. " : "") + "Press Space or tap to play";
+    }
+  }
+
+  // ---- input
+  const MAP = { ArrowLeft: "left", ArrowRight: "right", ArrowUp: "up", ArrowDown: "down", Escape: "esc", " ": "space" };
+  document.addEventListener("keydown", (e) => {
+    const k = MAP[e.key];
+    if (!k) return;
+    e.preventDefault();
+    press(k);
+  });
+  $("msg").addEventListener("pointerdown", (e) => { e.preventDefault(); press("space"); });
+  $("restart").addEventListener("click", () => { press("play"); $("restart").blur(); });
+  for (const b of document.querySelectorAll("#pad button")) {
+    let timer = null;
+    const stop = () => { clearInterval(timer); timer = null; };
+    b.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      press(b.dataset.k);
+      if (b.dataset.k !== "up") timer = setInterval(() => press(b.dataset.k), 90); // hold to repeat
+    });
+    for (const ev of ["pointerup", "pointercancel", "pointerleave"]) b.addEventListener(ev, stop);
+  }
+
+  // ---- frame loop
+  let last = null, acc = 0;
+  function frame(ts) {
+    if (last === null) last = ts;
+    acc += Math.min(ts - last, 250);
+    last = ts;
+    if (!TAPE) while (acc >= STEP) { tick(); acc -= STEP; }
+    draw();
+    requestAnimationFrame(frame);
+  }
+  if (TAPE) window.__rea = {
+    // one frame of a recorded case: step(dt, keys)
+    step(dt, k = []) { keys = k.slice(); tick(dt); draw(); return game.snapshot(); },
+    snapshot: () => game.snapshot(),
+    tapeUsed: () => used,
+  };
+  document.addEventListener("visibilitychange", () => { last = null; });
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

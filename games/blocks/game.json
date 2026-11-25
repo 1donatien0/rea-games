@@ -1,0 +1,19 @@
+{
+  "name": "blocks",
+  "title": "Blocks",
+  "original": {
+    "repo": "jakesgordon/javascript-tetris",
+    "license": "MIT",
+    "path": "originals/blocks"
+  },
+  "record": "record.mjs",
+  "ports": {
+    "web": {
+      "cmd": [
+        "node",
+        "ports/web/run.mjs"
+      ],
+      "play": "ports/web/index.html"
+    }
+  }
+}
