@@ -1,6 +1,6 @@
 {
   "name": "rea-games",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Reverse-engineer any game: record the original's behavior, rebuild it in any engine, and prove the rebuild plays the same, frame by frame.",
   "keywords": [
     "game",
