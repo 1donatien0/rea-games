@@ -9,30 +9,61 @@ FONT = "/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf"
 ORANGE, CREAM, INK = "#E2560F", "#F6EBDD", "#1F1209"
 
 ICON = [
-    "...XXXXXX........XXXXXX...",
-    "..XXXXXXXXXXXXXXXXXXXXXX..",
-    ".XXXXXKKXXXXXXXXXXXXGGXXX.",
-    "XXXXXXKKXXXXXXXXXXXXGGXXXX",
-    "XXXXKKKKKKXXXXXXXXPPXXRRXX",
-    "XXXXKKKKKKXXXXXXXXPPXXRRXX",
-    "XXXXXXKKXXXXXXXXXXXXBBXXXX",
-    "XXXXXXKKXXXSSXXXSSXXBBXXXX",
-    "XXXXXXXXXXSSSSXSSSSXXXXXXX",
-    "XXXXXXXXXXSSSSXSSSSXXXXXXX",
-    "XXXXXXXXXXXSSXXXSSXXXXXXXX",
-    "XXXXXXX............XXXXXXX",
-    ".XXXXXX............XXXXXX.",
-    "..XXXX..............XXXX..",
+    "......OOOOOO......................OOOOOO......",
+    "....OOssssssO....................OssssssOO....",
+    "...OhhhhhhhssO..................OsshhhhhhhO...",
+    "..OhhhhhhhhhOOOOOOOOOOOOOOOOOOOOOOhhGghhhhhO..",
+    ".OhhbbbbbbbhhhhhhhhTTTTTTTThhhhhhhhGgggbbbhhO.",
+    ".OhbbbbbKKKbhhhhhhhtttttttthhhhhhhbggg1bbbbhO.",
+    ".Odbbbbbkkkbbbbbkkbttttttttbkkbbbbbb11bbbbbdO.",
+    ".OdbbbbbkkkbbbbbbbbttttttttbbbbbPpbbbbbbRrbdO.",
+    "..OhbKkkkkkkkjbbbbbbbbbbbbbbbbbPpppbbbbRrrrO..",
+    "..Ohbkkkkmkkkjbbbbbbbbbbbbbbbbbppp3bbbbrrr2O..",
+    "..Ohbkkkkkkkkjbbboobbbbbbbboobbb33bbbbbb22dO..",
+    ".OhbbbbbkkkbbbboooooobbbboooooobbbbbUubbbbbhO.",
+    ".OhbbbbbkkkbbbboCCccobbbboCCccobbbbUuuubbbbhO.",
+    "OhbbbbbbjjjbbbooCcccoobbooCcccoobbbuuu4bbbbbhO",
+    "Ohbbbbbbbbbbbbooccccoobbooccccoobbbb44bbbbbbhO",
+    "OhbbbbbbbbbbbbboccccobbbboccccobbbbbbbbbbbbbdO",
+    "OhbbbbbbbbbbbbbooooooddddoooooobbbbbbbbbbbbbdO",
+    "OhbbbbbbbbbbbbbddooddddddddooddbbbbbbbbbbbbbdO",
+    "OhbbbbbbbbbbbbdOOOOOOOOOOOOOOOOhbbbbbbbbbbbbdO",
+    "OdbbbbbbbbbbbbdO..............OdbbbbbbbbbbbbdO",
+    "OdbbbbbbbbbbbbdO..............OdbbbbbbbbbbbbdO",
+    ".OdbbbbbbbbbbdO................OdbbbbbbbbbbdO.",
+    ".OdddbbbbbbdddO................OdddbbbbbbdddO.",
+    "..OddddddddddO..................OddddddddddO..",
+    "...OOddddddOO....................OOddddddOO...",
+    ".....OOOOOO........................OOOOOO.....",
 ]
 
 PALETTE = {
-    "X": "#F6EBDD",
-    "K": "#1F1209",
-    "S": "#3A2A20",
-    "G": "#2BB673",
-    "R": "#E8434B",
-    "B": "#3F7BF2",
-    "P": "#E879B9",
+    "O": "#1F1209",
+    "b": "#F1E4D2",
+    "h": "#FBF4EA",
+    "d": "#D9C5AC",
+    "s": "#3A2E28",
+    "k": "#2A1E16",
+    "K": "#4D3D33",
+    "m": "#3A2C23",
+    "g": "#2BB673",
+    "G": "#7FE0AE",
+    "r": "#E8434B",
+    "R": "#FF8A8F",
+    "p": "#E879B9",
+    "P": "#F7B3DA",
+    "u": "#3F7BF2",
+    "U": "#93B6FF",
+    "o": "#2A1E16",
+    "c": "#4D3D33",
+    "C": "#7A685C",
+    "t": "#E6D6C1",
+    "T": "#D3BFA5",
+    "j": "#140C08",
+    "1": "#1C8A55",
+    "2": "#B82D35",
+    "3": "#C25596",
+    "4": "#2B5BC4",
 }
 
 def pixels(cell, fill, dx=0, dy=0, opacity=None, swap=None):
@@ -73,22 +104,22 @@ def wordmark(text_color, dot_color, x=136, y=84):
     return f'<g fill="{text_color}">{body}</g><g fill="{dot_color}"><path d="{dot[0][1]}"/></g>', end2
 
 ON_DARK = {}
-ON_LIGHT = {"X": ORANGE}
+ON_LIGHT = {}
 
 def logo(text_color, swap):
-    mark = pixels(3.7, None, 12, 36, None, swap)
-    ghost = pixels(3.7, ORANGE, 12 + 5, 36 + 5, 0.35)
+    mark = pixels(2.3, None, 10, 34, None, swap)
+    ghost = pixels(2.3, ORANGE, 10 + 4, 34 + 4, 0.35)
     wm, end = wordmark(text_color, ORANGE)
     w = round(end + 18)
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} 128" fill="none" role="img" aria-label="rea-game">'
             f'{ghost}{mark}{wm}</svg>\n')
 
 def tile():
-    cell = 16; w = len(ICON[0]) * cell; h = len(ICON) * cell
+    cell = 9.5; w = len(ICON[0]) * cell; h = len(ICON) * cell
     ox = (512 - w) / 2 - 6; oy = (512 - h) / 2 - 6
     return ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="rea-game: a pixel gamepad and its twin">'
             f'<rect width="512" height="512" rx="112" fill="{ORANGE}"/>'
-            + pixels(cell, "#7A2A05", ox + 12, oy + 12, 0.55) + pixels(cell, None, ox, oy) + '</svg>\n')
+            + pixels(cell, "#7A2A05", ox + 10, oy + 10, 0.55) + pixels(cell, None, ox, oy) + '</svg>\n')
 
 open("docs/brand/logo-dark.svg", "w").write(logo(CREAM, ON_DARK))   # for dark backgrounds
 open("docs/brand/logo-light.svg", "w").write(logo(INK, ON_LIGHT))    # for light backgrounds
