@@ -3,6 +3,10 @@
 <p align="center"><b>Reverse-engineer any game, rebuild it in any engine, and prove the rebuild plays the same.</b><br>
 It runs the original, records what it does, and checks every rebuild against that recording, frame by frame.</p>
 
+<p align="center"><sub>Made in Türkiye 🇹🇷 by <a href="https://github.com/erkamyaman">erKam Yaman</a> · <a href="https://github.com/sponsors/erkamyaman">❤️ Sponsor me</a> · <a href="#sponsors">Sponsors</a> · <a href="LICENSE">MIT</a></sub></p>
+
+<p align="center">Also by me: <a href="https://github.com/erkamyaman/rust-anything"><b>rust-anything</b></a>, rewrite your app in Rust and prove it still behaves the same.</p>
+
 <p align="center">
   <img src="docs/assets/2048.gif" alt="The original 2048 and the rebuild side by side, same moves, boards identical in every frame" width="820">
   <br><sub>The original 2048 (left) and a rebuild (right), same moves, same random numbers: the boards match on every move.</sub>
@@ -109,4 +113,18 @@ Rebuilding behavior from a recording is clean-room work. Originals are included 
 
 Details: [`docs/STATUS.md`](docs/STATUS.md) · [`DECISIONS.md`](DECISIONS.md) · [`docs/pitfalls.md`](docs/pitfalls.md) · [`NOTICE`](NOTICE)
 
-MIT licensed.
+## Sponsors
+
+<p align="center">
+  rea-games is free and open source. If it helps your work, please consider sponsoring it.<br>
+  Your support keeps new games and engine ports coming.
+</p>
+
+<p align="center"><sub>Sponsors get a logo and a link here, nothing more. No paid recommendations and no setup guides for third-party AI API resellers, so nothing here steers your code, keys or data somewhere you didn't choose.</sub></p>
+
+<p align="center">
+  <a href="https://github.com/sponsors/erkamyaman"><img src="https://img.shields.io/badge/Become_a_sponsor-%E2%9D%A4-db61a2?style=for-the-badge&logo=githubsponsors&logoColor=white" alt="Become a sponsor"></a>
+  <a href="https://buymeacoffee.com/erkamyaman"><img src="https://img.shields.io/badge/Buy_me_a_coffee-%E2%98%95-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black" alt="Buy me a coffee"></a>
+</p>
+
+MIT licensed. Made in Türkiye 🇹🇷 by [erKam Yaman](https://github.com/erkamyaman).
