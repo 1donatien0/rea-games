@@ -42,3 +42,9 @@ offset) and watch `verify` fail each time; otherwise the cases may not reach the
 **A port rename left stale references behind.** The plain-Rust 2048 runner was replaced by the Bevy port, but
 CONTRIBUTING.md, the `verify` help text and the `package.json` exclusions still named the `rust` port. When a port is
 replaced, grep for the old port name across docs, help text and packaging lists in the same change.
+
+**The bundler dropped every name after the first in a multi-name export.** `export const W = 10, H = 20;` came out of
+`scripts/bundle.mjs` as a module returning `W` only, so `docs/play/blocks.html` read `H` as `undefined` and the board
+never drew its settled cells or grid lines. `verify` stayed green because it replays the logic, not the published page.
+`scripts/exported-names.mjs` keeps every binding (commas count only at depth zero) and `npm test`
+checks it; after regenerating `docs/play/`, open the changed pages and look at them.
