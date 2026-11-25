@@ -82,5 +82,5 @@ console.log(`case ${name}: ${c.inputs.length} steps, ${shown} frames shown (ever
 console.log(`shown frames identical ${shownSame}/${shown}; every step identical on the compared view ${stepsSame}/${c.inputs.length}; whole snapshot equal ${fullSame}/${c.inputs.length}`);
 console.log(`tape: original drew ${tapeOrig.length}, recording ${c.tape.length}, port used ${tapeUsed}`);
 if (orig.errors.length) console.log("page errors:", orig.errors);
-execFileSync("python3", [path.join(root, "scripts/compose.py"), tmp, out, "Original Chrome Dino (BSD-3)", "Rebuild, checked by rea-game", "frame"], { stdio: "inherit", env: { ...process.env, FPS: process.env.FPS ?? "12" } });
+execFileSync("python3", [path.join(root, "scripts/compose.py"), tmp, out, "Original Chrome Dino (BSD-3)", "Rebuild, checked by rea-games", "frame"], { stdio: "inherit", env: { ...process.env, FPS: process.env.FPS ?? "12" } });
 console.log("wrote", out);

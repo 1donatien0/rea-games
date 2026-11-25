@@ -1,6 +1,6 @@
 # Status
 
-What works today and how it was checked. Numbers are what `node bin/rea-game.mjs verify all` printed on the day this
+What works today and how it was checked. Numbers are what `node bin/rea-games.mjs verify all` printed on the day this
 was written (Linux container, Node 22, Chromium from Playwright). Nothing here was run on macOS or Windows.
 
 ## Verified
@@ -60,8 +60,8 @@ by their authors with no errors; they have not been played by a person.
   headless and fed key presses without errors; nobody has looked at it on screen. Godot 4.4.1 was downloaded from the
   official release and checked against the published SHA-512 before use. Breaking the GDScript port (spawn odds, win
   threshold) made 16 and 3 of 19 cases pass, so the check bites there too.
-- The repository has not been pushed anywhere. Cases are stored gzipped (`rea-game pack`).
+- The repository has not been pushed anywhere. Cases are stored gzipped (`rea-games pack`).
 - The agent plugin manifest (`.claude-plugin`) was written from the documented format and has not been installed in
   Claude Code. The Codex plugin format is not provided; `AGENTS.md` points Codex at the skill.
-- `node games/dino/record.mjs --visual` reads unpacked `cases/*.json`; run `rea-game record dino` first (it also clears packed copies).
+- `node games/dino/record.mjs --visual` reads unpacked `cases/*.json`; run `rea-games record dino` first (it also clears packed copies).
 - CI (`.github/workflows/verify.yml`) has never run.

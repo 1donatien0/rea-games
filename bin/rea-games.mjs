@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// rea-game: record a game's original, check a port against the recording.
+// rea-games: record a game's original, check a port against the recording.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -10,13 +10,13 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const [cmd, ...rest] = process.argv.slice(2);
 const flag = (n) => { const i = rest.indexOf(n); return i < 0 ? null : rest.splice(i, 2)[1] ?? true; };
 
-const help = `rea-game: reverse-engineer a game's behavior, then check a rebuild against it
+const help = `rea-games: reverse-engineer a game's behavior, then check a rebuild against it
 
-  rea-game list                        games, their ports and recorded cases
-  rea-game new <game>                  scaffold games/<game> (game.json, record.mjs, GAME.md, port stub)
-  rea-game record <game>               run the original and write cases/*.json
-  rea-game pack <game|all>             gzip the cases (the repository keeps them packed)
-  rea-game verify <game|all> [--port web|rust|...]   replay every case through a port
+  rea-games list                        games, their ports and recorded cases
+  rea-games new <game>                  scaffold games/<game> (game.json, record.mjs, GAME.md, port stub)
+  rea-games record <game>               run the original and write cases/*.json
+  rea-games pack <game|all>             gzip the cases (the repository keeps them packed)
+  rea-games verify <game|all> [--port web|rust|...]   replay every case through a port
 `;
 
 async function main() {

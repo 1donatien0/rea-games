@@ -1,4 +1,4 @@
-"""Writes the rea-game brand SVGs: a pixel gamepad with a faint twin (the original and its rebuild) and the wordmark.
+"""Writes the rea-games brand SVGs: a pixel gamepad with a faint twin (the original and its rebuild) and the wordmark.
 Needs fontTools (pip install fonttools) and Inter ExtraBold. Usage: python3 scripts/make-logo.py"""
 import sys
 from fontTools.ttLib import TTFont
@@ -98,7 +98,7 @@ def text_path(s, size, spacing, x, y, dot_x_out=None):
     return out, cx
 
 def wordmark(text_color, dot_color, x=136, y=84):
-    glyphs, end = text_path("rea-game", 64, -2.4, x, y)
+    glyphs, end = text_path("rea-games", 64, -2.4, x, y)
     dot, end2 = text_path(".", 64, 0, end, y)
     body = "".join(f'<path d="{d}"/>' for _, d in glyphs)
     return f'<g fill="{text_color}">{body}</g><g fill="{dot_color}"><path d="{dot[0][1]}"/></g>', end2
@@ -111,13 +111,13 @@ def logo(text_color, swap):
     ghost = pixels(2.3, ORANGE, 10 + 4, 34 + 4, 0.35)
     wm, end = wordmark(text_color, ORANGE)
     w = round(end + 18)
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} 128" fill="none" role="img" aria-label="rea-game">'
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} 128" fill="none" role="img" aria-label="rea-games">'
             f'{ghost}{mark}{wm}</svg>\n')
 
 def tile():
     cell = 9.5; w = len(ICON[0]) * cell; h = len(ICON) * cell
     ox = (512 - w) / 2 - 6; oy = (512 - h) / 2 - 6
-    return ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="rea-game: a pixel gamepad and its twin">'
+    return ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="rea-games: a pixel gamepad and its twin">'
             f'<rect width="512" height="512" rx="112" fill="{ORANGE}"/>'
             + pixels(cell, "#7A2A05", ox + 10, oy + 10, 0.55) + pixels(cell, None, ox, oy) + '</svg>\n')
 
