@@ -46,7 +46,7 @@ fn main() {
             }),
             ..default()
         }))
-        .insert_resource(ClearColor(Color::srgb(0.98, 0.97, 0.94)))
+        .insert_resource(ClearColor(Color::srgb_u8(0x14, 0x16, 0x1c)))
         .insert_non_send(Live {
             game,
             swipe_start: None,
@@ -127,18 +127,19 @@ fn input(
 
 fn tile_color(v: u32) -> Color {
     match v {
-        0 => Color::srgb(0.80, 0.76, 0.71),
-        2 => Color::srgb(0.93, 0.89, 0.85),
-        4 => Color::srgb(0.93, 0.88, 0.78),
-        8 => Color::srgb(0.95, 0.69, 0.47),
-        16 => Color::srgb(0.96, 0.58, 0.39),
-        32 => Color::srgb(0.96, 0.49, 0.37),
-        64 => Color::srgb(0.96, 0.37, 0.23),
-        128 => Color::srgb(0.93, 0.81, 0.45),
-        256 => Color::srgb(0.93, 0.80, 0.38),
-        512 => Color::srgb(0.93, 0.78, 0.31),
-        1024 => Color::srgb(0.93, 0.77, 0.25),
-        _ => Color::srgb(0.93, 0.76, 0.18),
+        0 => Color::srgb_u8(0x2b, 0x30, 0x3c),
+        2 => Color::srgb_u8(0x3b, 0x42, 0x52),
+        4 => Color::srgb_u8(0x43, 0x4c, 0x5e),
+        8 => Color::srgb_u8(0xd0, 0x87, 0x70),
+        16 => Color::srgb_u8(0xd9, 0x77, 0x4f),
+        32 => Color::srgb_u8(0xe0, 0x61, 0x3b),
+        64 => Color::srgb_u8(0xe8, 0x4a, 0x2c),
+        128 => Color::srgb_u8(0xeb, 0xcb, 0x8b),
+        256 => Color::srgb_u8(0xe8, 0xc2, 0x6a),
+        512 => Color::srgb_u8(0xe6, 0xb8, 0x4a),
+        1024 => Color::srgb_u8(0xa3, 0xbe, 0x8c),
+        2048 => Color::srgb_u8(0x88, 0xc0, 0xd0),
+        _ => Color::srgb_u8(0xb4, 0x8e, 0xad),
     }
 }
 
@@ -155,7 +156,7 @@ fn draw(
     let board = SIZE as f32 * CELL + (SIZE as f32 + 1.0) * GAP;
     let origin = Vec2::new(0.0, -40.0);
     commands.spawn((
-        Sprite::from_color(Color::srgb(0.73, 0.68, 0.63), Vec2::splat(board)),
+        Sprite::from_color(Color::srgb_u8(0x20, 0x24, 0x2e), Vec2::splat(board)),
         Transform::from_xyz(origin.x, origin.y, 0.0),
         Drawn,
     ));
@@ -171,9 +172,11 @@ fn draw(
             ));
             if v != 0 {
                 let ink = if v <= 4 {
-                    Color::srgb(0.47, 0.43, 0.40)
-                } else {
+                    Color::srgb_u8(0xe8, 0xea, 0xf0)
+                } else if v <= 64 || v > 2048 {
                     Color::WHITE
+                } else {
+                    Color::srgb_u8(0x22, 0x22, 0x22)
                 };
                 let size = if v < 100 {
                     48.0

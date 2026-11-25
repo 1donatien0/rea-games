@@ -34,7 +34,7 @@ by their authors with no errors; they have not been played by a person.
 
 ## 2048 Bevy port
 
-`game2048-core` through `game2048-runner` is verified (spawn odds 0.9 to 0.8: 3 of 19 pass; win threshold 2048 to 4096: 16 of 19 pass). The Bevy window (0.19, 2D) compiles, and a screenshot taken under Xvfb with software rendering shows the board and tile numbers. Keys, swipe, restart and keep-playing were not tried, and the tile colours follow the original's palette (MIT, see `NOTICE`) rather than the web port's own. This port replaced the earlier plain-Rust 2048 runner, which had the same logic and no window.
+`game2048-core` through `game2048-runner` is verified (spawn odds 0.9 to 0.8: 3 of 19 pass; win threshold 2048 to 4096: 16 of 19 pass). The Bevy window (0.19, 2D) compiles, and a screenshot taken under Xvfb with software rendering shows the board and tile numbers. Keys, swipe, restart and keep-playing were not tried; only the starting board was seen. The tile colours are the web port's own dark palette, not the original's. This port replaced the earlier plain-Rust 2048 runner, which had the same logic and no window.
 
 ## Dino engine ports: what is and is not proven
 
