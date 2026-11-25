@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="rea-game: a pixel game controller and its recorded twin">
+  <rect width="512" height="512" fill="#E2560F"/>
+  <g transform="translate(13 -22) scale(.9)">
+  <!-- the recording: a ghost of the controller, shifted, dashed -->
+  <g fill="none" stroke="#7A2A05" stroke-width="6" stroke-dasharray="14 10" opacity=".55" transform="translate(26 26)">
+    <path d="M110 190h292l36 40 32 120c8 30-14 56-42 56-24 0-36-12-50-34-8-12-16-18-34-18H168c-18 0-26 6-34 18-14 22-26 34-50 34-28 0-50-26-42-56l32-120z"/>
+  </g>
+  <!-- the controller, built from square pixels -->
+  <g shape-rendering="crispEdges">
+    <path fill="#F6EBDD" d="M110 190h292l36 40 32 120c8 30-14 56-42 56-24 0-36-12-50-34-8-12-16-18-34-18H168c-18 0-26 6-34 18-14 22-26 34-50 34-28 0-50-26-42-56l32-120z"/>
+    <!-- d-pad -->
+    <g fill="#1F1209"><rect x="150" y="238" width="24" height="72"/><rect x="126" y="262" width="72" height="24"/></g>
+    <!-- buttons -->
+    <g fill="#E5560F"><rect x="318" y="244" width="30" height="30"/><rect x="360" y="274" width="30" height="30"/></g>
+    <g fill="#1F1209"><rect x="228" y="270" width="22" height="12"/><rect x="262" y="270" width="22" height="12"/></g>
+  </g>
+  </g>
+</svg>
