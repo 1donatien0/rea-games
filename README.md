@@ -1,0 +1,112 @@
+<h1 align="center">rea-games</h1>
+
+<p align="center"><b>Reverse-engineer any game, rebuild it in any engine, and prove the rebuild plays the same.</b><br>
+It runs the original, records what it does, and checks every rebuild against that recording, frame by frame.</p>
+
+<p align="center">
+  <img src="docs/assets/2048.gif" alt="The original 2048 and the rebuild side by side, same moves, boards identical in every frame" width="820">
+  <br><sub>The original 2048 (left) and a rebuild (right), same moves, same random numbers: the boards match on every move.</sub>
+</p>
+
+<p align="center">
+  <img src="docs/assets/dino.gif" alt="The original Chrome Dino and the rebuild side by side, same inputs, identical state every frame" width="820">
+  <br><sub>Chrome's Dino: 1,800 steps, 23 obstacles, a pterodactyl, then a crash. Obstacle positions, dino height, crash and score match on every step.</sub>
+</p>
+
+<p align="center">
+  <img src="docs/assets/canvas-bird.gif" alt="The original Canvas Bird and the rebuild side by side; every draw call of every frame is identical" width="760">
+  <br><sub>Canvas Bird: the original's state is private, so its draw calls are compared instead: all 1,140 steps match.</sub>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-555" alt="MIT license">
+  <img src="https://img.shields.io/badge/games-3-2563EB" alt="3 games">
+  <img src="https://img.shields.io/badge/recorded%20inputs-155%2C453-E2862A" alt="155,453 recorded inputs">
+  <img src="https://img.shields.io/badge/runs%20in-Claude%20Code%20·%20Codex-6E40C9" alt="Runs in Claude Code and Codex">
+</p>
+
+Part of a family: [rea](https://github.com/morluto/rea) takes software apart, [rea-video](https://github.com/JuneYaooo/rea-video)
+does it for video, [craft-anything](https://github.com/storytold/craft-anything) rebuilds apps, and
+[rust-anything](https://github.com/erkamyaman/rust-anything) proves a Rust rewrite behaves like the original.
+**rea-games does it for games.**
+
+## Play the rebuilds
+
+Open one file, no install. Each is written from a behavior spec (`GAME.md`), draws its own art, and passes its recording.
+
+| Game | Original | Play | Verified |
+|---|---|---|---|
+| 2048 | [gabrielecirulli/2048](https://github.com/gabrielecirulli/2048), MIT | `docs/play/2048.html` | 19 cases, 24,044 inputs: web, Rust and Godot ports |
+| Dino | Chrome's offline dinosaur ([copy](https://github.com/wayou/t-rex-runner), BSD-3) | `docs/play/dino.html` | 29 cases, 63,000 frames: web port |
+| Canvas Bird | [giotiskl/Canvas-Bird](https://github.com/giotiskl/Canvas-Bird), MIT | `docs/play/canvas-bird.html` | 30 cases, 68,409 frames: web port |
+
+## How it works
+
+```
+original game ──(fake clock, seeded random numbers)──> cases/*.json   inputs + every random number + state after each step
+                                                                          │
+GAME.md  (what the recording shows)  ──> your port, in any engine  ──> rea-games verify  ──> identical, or the first difference
+```
+
+1. **Record.** The original runs unmodified. Its clock and `Math.random` are replaced from outside, so a run can be repeated. Every random number it draws is saved (the *tape*), with the inputs and the game state after each step.
+2. **Spec.** `GAME.md` states the rules, the order of operations in a frame, the constants, the quirks (including the original's bugs) and what is not modelled.
+3. **Port.** Any program that reads a case on stdin and prints `{trace, tapeUsed}` is a port: JavaScript, Rust, Godot run headless, C#.
+4. **Verify.** Every recorded state must match exactly, and the port must use exactly the recorded random numbers. The first difference is printed with its path.
+
+```
+$ node bin/rea-games.mjs verify all
+2048 / web          => 19/19 cases identical, 24044 inputs
+2048 / rust         => 19/19 cases identical, 24044 inputs
+2048 / godot        => 19/19 cases identical, 24044 inputs
+canvas-bird / web   => 30/30 cases identical, 68409 inputs
+dino / web          => 29/29 cases identical, 63000 inputs
+```
+
+A check that cannot fail proves nothing, so each port was also broken on purpose (a constant, a collision offset, a timing gate, a spawn-gap factor): `verify` failed each time, for example 5 of 30 Canvas Bird cases pass with the 30 fps gate changed, 3 of 19 for 2048 with the spawn odds changed from 0.9 to 0.8.
+
+## Use it with an agent
+
+```
+claude plugin marketplace add <your-github-user>/rea-games
+claude plugin install rea-games@rea-games
+```
+
+Then: *"rea this game: <link to an open-source game>, rebuild it in Godot."* The skill (`skills/rea-games/SKILL.md`) runs the loop above. It records, writes the spec, builds the port, verifies, and reports what it could not cover.
+
+Or by hand:
+
+```
+node bin/rea-games.mjs list
+node bin/rea-games.mjs new my-game        # scaffold games/my-game
+node bin/rea-games.mjs record my-game     # run the original, write the cases
+node bin/rea-games.mjs verify my-game --port web
+node bin/rea-games.mjs pack all           # gzip the cases for git
+```
+
+Needs Node 22. Browser games also need Playwright with Chromium; the Rust 2048 port needs `cargo`, the Godot one a Godot 4.4 binary (`REA_GODOT=/path/to/godot`).
+
+## Engines
+
+| Target | Status |
+|---|---|
+| Web (canvas, one HTML file, mobile friendly) | all three games, verified |
+| Rust | 2048, verified through the same runner. Bevy-ready logic |
+| Godot 4.4 (GDScript) | 2048, verified: a headless runner passes all 19 cases. A playable scene (`ports/godot/main.tscn`) loads and takes input in a headless smoke test; its look has not been checked |
+| Unity (C#) | not started |
+| Capacitor (wrap the web build for iOS/Android) | not started; Capacitor wraps a web build, so it builds on the web ports |
+
+A port counts as verified only when `verify` runs it through its runner. Ports that are not verified are labelled as such.
+
+## Legal, in short
+
+Rebuilding behavior from a recording is clean-room work. Originals are included only where their licence allows it, unmodified, with their licence (`NOTICE`). Rebuilds use no art, sound, names or code from the originals. If you add a game, check its licence first and do not use a trademarked name.
+
+## What it does not do (yet)
+
+- It matches **behavior**, not looks: the rebuilds draw their own art.
+- Games must be runnable and deterministic once their clock and random numbers are controlled. Network games, and games whose state cannot be observed from outside, need more work.
+- Coverage is what the cases hit. Each `GAME.md` lists the gaps (for Dino: few crashes into the flying obstacle; for Canvas Bird: few hits on the bottom pipe).
+
+Details: [`docs/STATUS.md`](docs/STATUS.md) · [`DECISIONS.md`](DECISIONS.md) · [`docs/pitfalls.md`](docs/pitfalls.md) · [`NOTICE`](NOTICE)
+
+MIT licensed.
