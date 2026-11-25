@@ -1,4 +1,4 @@
-<h1 align="center">rea-games</h1>
+<h1 align="center">rea-game</h1>
 
 <p align="center"><b>Reverse-engineer any game, rebuild it in any engine, and prove the rebuild plays the same.</b><br>
 It runs the original, records what it does, and checks every rebuild against that recording, frame by frame.</p>
@@ -32,7 +32,7 @@ It runs the original, records what it does, and checks every rebuild against tha
 Part of a family: [rea](https://github.com/morluto/rea) takes software apart, [rea-video](https://github.com/JuneYaooo/rea-video)
 does it for video, [craft-anything](https://github.com/storytold/craft-anything) rebuilds apps, and
 [rust-anything](https://github.com/erkamyaman/rust-anything) proves a Rust rewrite behaves like the original.
-**rea-games does it for games.**
+**rea-game does it for games.**
 
 ## Play the rebuilds
 
@@ -49,7 +49,7 @@ Open one file, no install. Each is written from a behavior spec (`GAME.md`), dra
 ```
 original game ──(fake clock, seeded random numbers)──> cases/*.json   inputs + every random number + state after each step
                                                                           │
-GAME.md  (what the recording shows)  ──> your port, in any engine  ──> rea-games verify  ──> identical, or the first difference
+GAME.md  (what the recording shows)  ──> your port, in any engine  ──> rea-game verify  ──> identical, or the first difference
 ```
 
 1. **Record.** The original runs unmodified. Its clock and `Math.random` are replaced from outside, so a run can be repeated. Every random number it draws is saved (the *tape*), with the inputs and the game state after each step.
@@ -58,7 +58,7 @@ GAME.md  (what the recording shows)  ──> your port, in any engine  ──> r
 4. **Verify.** Every recorded state must match exactly, and the port must use exactly the recorded random numbers. The first difference is printed with its path.
 
 ```
-$ node bin/rea-games.mjs verify all
+$ node bin/rea-game.mjs verify all
 2048 / web          => 19/19 cases identical, 24044 inputs
 2048 / rust         => 19/19 cases identical, 24044 inputs
 2048 / godot        => 19/19 cases identical, 24044 inputs
@@ -71,20 +71,20 @@ A check that cannot fail proves nothing, so each port was also broken on purpose
 ## Use it with an agent
 
 ```
-claude plugin marketplace add <your-github-user>/rea-games
-claude plugin install rea-games@rea-games
+claude plugin marketplace add erkamyaman/rea-game
+claude plugin install rea-game@rea-game
 ```
 
-Then: *"rea this game: <link to an open-source game>, rebuild it in Godot."* The skill (`skills/rea-games/SKILL.md`) runs the loop above. It records, writes the spec, builds the port, verifies, and reports what it could not cover.
+Then: *"rea this game: <link to an open-source game>, rebuild it in Godot."* The skill (`skills/rea-game/SKILL.md`) runs the loop above. It records, writes the spec, builds the port, verifies, and reports what it could not cover.
 
 Or by hand:
 
 ```
-node bin/rea-games.mjs list
-node bin/rea-games.mjs new my-game        # scaffold games/my-game
-node bin/rea-games.mjs record my-game     # run the original, write the cases
-node bin/rea-games.mjs verify my-game --port web
-node bin/rea-games.mjs pack all           # gzip the cases for git
+node bin/rea-game.mjs list
+node bin/rea-game.mjs new my-game        # scaffold games/my-game
+node bin/rea-game.mjs record my-game     # run the original, write the cases
+node bin/rea-game.mjs verify my-game --port web
+node bin/rea-game.mjs pack all           # gzip the cases for git
 ```
 
 Needs Node 22. Browser games also need Playwright with Chromium; the Rust 2048 port needs `cargo`, the Godot one a Godot 4.4 binary (`REA_GODOT=/path/to/godot`).
@@ -116,7 +116,7 @@ Details: [`docs/STATUS.md`](docs/STATUS.md) · [`DECISIONS.md`](DECISIONS.md) ·
 ## Sponsors
 
 <p align="center">
-  rea-games is free and open source. If it helps your work, please consider sponsoring it.<br>
+  rea-game is free and open source. If it helps your work, please consider sponsoring it.<br>
   Your support keeps new games and engine ports coming.
 </p>
 

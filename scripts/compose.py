@@ -23,7 +23,7 @@ for L in labels:
     dr.text((20, H - 48), msg, font=font(24, True), fill=(120, 220, 140) if L["same"] else (255, 90, 90))
     if L.get("extra"):  # optional second caption line, e.g. what was compared
         dr.text((20, H - 18), L["extra"], font=font(14), fill=(139, 147, 167))
-    dr.text((W - 330, H - 44), "rea-games", font=font(18), fill=(139, 147, 167))
+    dr.text((W - 330, H - 44), "rea-game", font=font(18), fill=(139, 147, 167))
     im.save(os.path.join(d, "out", f"f{i:04d}.png"))
 frames = os.path.join(d, "out", "f%04d.png")
 pal = os.path.join(d, "pal.png")

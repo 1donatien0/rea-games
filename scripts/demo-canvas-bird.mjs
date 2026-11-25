@@ -73,5 +73,5 @@ fs.writeFileSync(path.join(tmp, "labels.json"), JSON.stringify(labels));
 console.log(`case ${name}: ${STEPS} steps, ${labels.length} frames shown (every ${EVERY}th)`);
 console.log(`shown frames identical ${shownSame}/${labels.length}; every step's draw list identical ${stepsSame}/${STEPS}`);
 console.log(`tape: original drew ${tapeOrig.length} (first ${tapeUsed} are the ones the port used, recording has ${c.tape.length})`);
-execFileSync("python3", [path.join(root, "scripts/compose.py"), tmp, out, "Original Canvas Bird (MIT)", "Rebuild, checked by rea-games", "frame"], { stdio: "inherit", env: { ...process.env, FPS: process.env.FPS ?? "12", WIDTH: process.env.WIDTH ?? "760" } });
+execFileSync("python3", [path.join(root, "scripts/compose.py"), tmp, out, "Original Canvas Bird (MIT)", "Rebuild, checked by rea-game", "frame"], { stdio: "inherit", env: { ...process.env, FPS: process.env.FPS ?? "12", WIDTH: process.env.WIDTH ?? "760" } });
 console.log("wrote", out);

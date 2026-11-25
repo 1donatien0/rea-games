@@ -84,5 +84,5 @@ await browser.close(); sOrig.close(); sPort.close();
 fs.writeFileSync(path.join(tmp, "labels.json"), JSON.stringify(labels));
 console.log(`moves ${moves.length}, boards identical in ${identical}/${labels.length} frames`);
 if (identical !== labels.length) { console.error("original and rebuild differ: not rendering"); process.exit(1); }
-execFileSync("python3", [path.join(root, "scripts/compose.py"), tmp, out, "Original 2048 (MIT)", "Rebuild, checked by rea-games", "move"], { stdio: "inherit" });
+execFileSync("python3", [path.join(root, "scripts/compose.py"), tmp, out, "Original 2048 (MIT)", "Rebuild, checked by rea-game", "move"], { stdio: "inherit" });
 console.log("wrote", out);
