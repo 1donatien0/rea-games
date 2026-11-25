@@ -1,0 +1,42 @@
+{
+  "name": "2048",
+  "title": "2048",
+  "original": {
+    "repo": "gabrielecirulli/2048",
+    "license": "MIT",
+    "path": "originals/2048"
+  },
+  "record": "record.mjs",
+  "ports": {
+    "web": {
+      "cmd": [
+        "node",
+        "ports/web/run.mjs"
+      ],
+      "play": "ports/web/index.html"
+    },
+    "rust": {
+      "build": [
+        "cargo",
+        "build",
+        "--release",
+        "--quiet",
+        "--manifest-path",
+        "ports/rust/Cargo.toml"
+      ],
+      "cmd": [
+        "ports/rust/target/release/rea-2048"
+      ]
+    },
+    "godot": {
+      "cmd": [
+        "godot",
+        "--headless",
+        "--path",
+        "ports/godot",
+        "--script",
+        "runner.gd"
+      ]
+    }
+  }
+}
