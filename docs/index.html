@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>rea-games: play the verified rebuilds</title>
+<meta name="description" content="Reverse-engineer any game, rebuild it in any engine, and prove it plays the same, frame by frame. Play the verified rebuilds in your browser.">
+<meta property="og:title" content="rea-games">
+<meta property="og:description" content="Reverse-engineer any game, rebuild it in any engine, and prove it plays the same, frame by frame.">
+<meta property="og:image" content="https://erkamyaman.github.io/rea-games/assets/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/logo.png">
+<style>
+  :root { --bg:#14161c; --panel:#1b1f27; --line:#2a303b; --text:#f6ebdd; --muted:#9aa3b2; --brand:#e2560f; --good:#63c3a7; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  a { color:inherit; }
+  .wrap { max-width:1040px; margin:0 auto; padding:48px 20px 64px; }
+  header { text-align:center; }
+  header img { width:min(420px,88vw); height:auto; }
+  .tag { margin:18px auto 0; max-width:38rem; font-size:19px; color:var(--text); }
+  .sub { margin:8px auto 0; max-width:38rem; color:var(--muted); font-size:15px; }
+  .games { display:grid; gap:18px; margin-top:44px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
+  .game { display:flex; flex-direction:column; background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow:hidden; text-decoration:none; transition:border-color .15s ease; }
+  .game:hover, .game:focus-visible { border-color:var(--brand); }
+  .game:focus-visible { outline:2px solid var(--brand); outline-offset:2px; }
+  .game .shot { aspect-ratio:16/10; background:#0e1014; display:grid; place-items:center; overflow:hidden; }
+  .game .shot img { width:100%; height:100%; object-fit:contain; }
+  .game .body { padding:16px 18px 18px; display:flex; flex-direction:column; gap:6px; flex:1; }
+  .game h2 { margin:0; font-size:20px; }
+  .game .proof { font:13px/1.4 ui-monospace,Menlo,monospace; color:var(--good); }
+  .game .orig { font-size:13px; color:var(--muted); }
+  .game .play { margin-top:auto; padding-top:10px; font-weight:600; color:var(--brand); }
+  .how { margin-top:56px; border-top:1px solid var(--line); padding-top:28px; color:var(--muted); font-size:15px; max-width:44rem; }
+  .how strong { color:var(--text); }
+  footer { margin-top:40px; color:var(--muted); font-size:14px; text-align:center; }
+  @media (prefers-reduced-motion: reduce) { .game { transition:none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="brand/logo-dark.svg" alt="rea-games">
+    <p class="tag">Reverse-engineer any game, rebuild it in any engine, and prove it plays the same, frame by frame.</p>
+    <p class="sub">Each game below is a rebuild written from a behavior spec. It draws its own art and matches the original's recording on every recorded step.</p>
+  </header>
+
+  <main class="games">
+    <a class="game" href="play/2048.html">
+      <div class="shot"><img src="assets/2048.gif" alt="The original 2048 and the rebuild side by side, boards identical on every move" loading="lazy"></div>
+      <div class="body">
+        <h2>2048</h2>
+        <span class="proof">19/19 cases identical · 24,044 inputs</span>
+        <span class="orig">Original: gabrielecirulli/2048 (MIT)</span>
+        <span class="play">Play the rebuild</span>
+      </div>
+    </a>
+    <a class="game" href="play/dino.html">
+      <div class="shot"><img src="assets/dino.gif" alt="The original Dino and the rebuild side by side, identical state every frame" loading="lazy"></div>
+      <div class="body">
+        <h2>Dino</h2>
+        <span class="proof">29/29 cases identical · 63,000 frames</span>
+        <span class="orig">Original: Chrome's offline dinosaur (BSD-3)</span>
+        <span class="play">Play the rebuild</span>
+      </div>
+    </a>
+    <a class="game" href="play/canvas-bird.html">
+      <div class="shot"><img src="assets/canvas-bird.gif" alt="The original Canvas Bird and the rebuild, every draw call identical" loading="lazy"></div>
+      <div class="body">
+        <h2>Canvas Bird</h2>
+        <span class="proof">30/30 cases identical · 68,409 frames</span>
+        <span class="orig">Original: giotiskl/Canvas-Bird (MIT)</span>
+        <span class="play">Play the rebuild</span>
+      </div>
+    </a>
+  </main>
+
+  <section class="how">
+    <p><strong>How it works.</strong> rea-games runs the original with its clock and random numbers controlled from outside, records the inputs, every random number and the state after each step, and checks a rebuild in any engine against that recording. The first difference is printed with its path.</p>
+    <p><strong>Rebuild your own.</strong> Install the Claude Code plugin and ask: "rea this game: &lt;link&gt;, rebuild it in Godot."</p>
+  </section>
+
+  <footer>
+    <a href="https://github.com/erkamyaman/rea-games">github.com/erkamyaman/rea-games</a> · MIT · Made in Türkiye by <a href="https://github.com/erkamyaman">erKam Yaman</a>
+  </footer>
+</div>
+</body>
+</html>
