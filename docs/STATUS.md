@@ -46,6 +46,18 @@ by their authors with no errors; they have not been played by a person.
 - Godot: verified. Breaking force, jump speed and the hit-box offset made 2, 6 and 16 of 30 cases pass. Narrowing the hit window by one pixel still passed: pipes always sit at x = 1 mod 3, so that boundary is never reached by any recording (an equivalent mutant, not a check failure). The runner rebuilds JavaScript's shortest-digit number text; one tiny exponent-form value in the recording relies on Godot's own `to_float`, and it matches. The scene was smoke-tested headless only.
 - Rust/Bevy: `bird-core` through `bird-runner` verified (force, fall limit and gap breaks all failed; the same hit-window mutant survives for the same reason). The Bevy window (0.19.1) compiles and ran 20 s under Xvfb without a crash; nobody looked at it or played it. Score is shown in the window title.
 
+## Blocks (falling blocks)
+
+| Game | Port | Cases | Frames | Result |
+|---|---|---|---|---|
+| Blocks | web (JS) | 36 | 104,208 | all identical, exact comparison |
+| Blocks | Godot 4.4.1 (GDScript, headless) | 36 | 104,208 | all identical, exact comparison |
+| Blocks | Rust (`blocks-core` through `blocks-runner`) | 36 | 104,208 | all identical, exact comparison |
+
+Recorded from the unmodified original (MIT) with a fake clock and its random piece bag taped: 142 games, 109 losses, 3,271 locked pieces, line clears of 1, 2, 3 and 4 rows (461, 79, 23, 20), all 28 piece/rotation pairs, 993 blocked rotations. Breaking a piece shape, the speed formula, a rotation rule or the 4-line score made `verify` fail each time on every port (for example 26, 17, 11 and 6 of 36 cases failed on the web port). The demo GIF shows 152 of 152 frames identical, and a separate run matched all 3,500 steps of a case.
+
+Gaps: the original's "second drop in the frame that loses" appears in only 3 recorded frames, and a full top row is never reached. The original has no pause. The Godot scene was smoke-tested headless only; the Bevy window compiled and one software-rendered screenshot shows the court, a piece, the next-piece preview and the score text, but no keys were sent. The game is called "blocks" because Tetris is a registered trademark; see `NOTICE`.
+
 ## Gaps (read before quoting any number)
 
 - **Coverage is what the cases hit.** Dino: only 7 crashes into the flying obstacle, none while speed-dropping; no
