@@ -1,0 +1,9 @@
+[package]
+name = "blocks-bevy"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[dependencies]
+blocks-core = { path = "../core" }
+bevy = { version = "0.19", default-features = false, features = ["2d"] }

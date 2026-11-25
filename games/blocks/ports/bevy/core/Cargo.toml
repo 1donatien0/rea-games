@@ -1,0 +1,8 @@
+[package]
+name = "blocks-core"
+version = "0.1.0"
+edition = "2021"
+description = "Blocks (falling-blocks puzzle) rules in plain Rust, written from GAME.md and checked against the recording of the original"
+license = "MIT"
+
+[dependencies]

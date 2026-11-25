@@ -1,0 +1,6 @@
+[workspace]
+resolver = "2"
+members = ["core", "runner", "game"]
+
+[profile.release]
+opt-level = 3

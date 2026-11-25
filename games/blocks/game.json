@@ -24,6 +24,21 @@
         "--script",
         "runner.gd"
       ]
+    },
+    "bevy": {
+      "build": [
+        "cargo",
+        "build",
+        "--release",
+        "--quiet",
+        "--manifest-path",
+        "ports/bevy/Cargo.toml",
+        "-p",
+        "blocks-runner"
+      ],
+      "cmd": [
+        "ports/bevy/target/release/blocks-runner"
+      ]
     }
   }
 }
