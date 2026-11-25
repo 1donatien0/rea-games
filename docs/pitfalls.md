@@ -24,6 +24,10 @@ colour.
 `verify`. Read the reason for each failure: a broken port should fail with `trace differs at ...` or a tape count, not an
 error from the edit itself.
 
+**A play page drew nothing after bundling.** `scripts/bundle.mjs` takes a module's exports from the first name on each
+`export const` line, so `export const W = 640, H = 480` exported `W` only, `H` was `undefined` in `docs/play/paddles.html`
+and the canvas had no height, with no error. Export one name per line, and open the bundled page, not only `ports/web`.
+
 **`in` found keys the port never printed.** `firstDiff` checked `k in a`, which is true for inherited names, so a port
 that printed a `constructor` key was reported as `.constructor: undefined != 1` instead of a missing key. Check own keys
 with `Object.hasOwn`; `test/compare.test.mjs` covers it.
