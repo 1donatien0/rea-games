@@ -1,9 +1,13 @@
+<p align="center">
+  <img src="docs/assets/logo.png" width="140" height="140" alt="rea-game: a pixel game controller and its recorded twin">
+</p>
+
 <h1 align="center">rea-game</h1>
 
 <p align="center"><b>Reverse-engineer any game, rebuild it in any engine, and prove the rebuild plays the same.</b><br>
 It runs the original, records what it does, and checks every rebuild against that recording, frame by frame.</p>
 
-<p align="center"><sub>Made in Türkiye 🇹🇷 by <a href="https://github.com/erkamyaman">erKam Yaman</a> · <a href="https://github.com/sponsors/erkamyaman">❤️ Sponsor me</a> · <a href="#sponsors">Sponsors</a> · <a href="LICENSE">MIT</a></sub></p>
+<p align="center"><sub>Made in Türkiye 🇹🇷 by <a href="https://github.com/erkamyaman">erKam Yaman</a> · <a href="https://github.com/sponsors/erkamyaman">❤️ Sponsor me</a> · <a href="#sponsors">Sponsors</a> · <a href="LICENSE">MIT</a><br>Sponsored by <a href="https://coderabbit.link/er-kam"><img src="docs/assets/brands/coderabbit.png" width="22" height="22" align="absmiddle" alt=""> <b>CodeRabbit</b></a></sub></p>
 
 <p align="center">Also by me: <a href="https://github.com/erkamyaman/rust-anything"><b>rust-anything</b></a>, rewrite your app in Rust and prove it still behaves the same.</p>
 
@@ -116,11 +120,29 @@ Details: [`docs/STATUS.md`](docs/STATUS.md) · [`DECISIONS.md`](DECISIONS.md) ·
 ## Sponsors
 
 <p align="center">
-  rea-game is free and open source. If it helps your work, please consider sponsoring it.<br>
+  <a href="https://github.com/erkamyaman/rea-game">rea-game</a> is free and open source. If it helps your work, please consider sponsoring it.<br>
   Your support keeps new games and engine ports coming.
 </p>
 
-<p align="center"><sub>Sponsors get a logo and a link here, nothing more. No paid recommendations and no setup guides for third-party AI API resellers, so nothing here steers your code, keys or data somewhere you didn't choose.</sub></p>
+<p align="center"><sub>Your safety comes first: sponsors get a logo and a link here, nothing more. No paid recommendations and no setup guides for third-party AI API resellers, so nothing here steers your code, keys or data somewhere you didn't choose.</sub></p>
+
+<p align="center">
+  <a href="https://coderabbit.link/er-kam">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/sponsors/company-dark.svg">
+      <img src="docs/assets/sponsors/company-light.svg" width="800" alt="Company sponsor: CodeRabbit">
+    </picture>
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/sponsors/erkamyaman">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/sponsors/sponsors-dark.svg">
+      <img src="docs/assets/sponsors/sponsors-light.svg" width="800" alt="Sponsors: Santosh Yadav, Hakan Soytürk, Ali Yilmaz, Ashley Hunter, Fatih Uzuntaş, bugrcvi">
+    </picture>
+  </a>
+</p>
 
 <p align="center">
   <a href="https://github.com/sponsors/erkamyaman"><img src="https://img.shields.io/badge/Become_a_sponsor-%E2%9D%A4-db61a2?style=for-the-badge&logo=githubsponsors&logoColor=white" alt="Become a sponsor"></a>
