@@ -19,6 +19,11 @@ case "differed". Compare parsed values (`lib/compare.mjs`), never `JSON.stringif
 Replace only the file name in the sums line, and look at a new workflow's log for the `verify` output, not just its
 colour.
 
+**A deliberate break crashed the port instead of failing the check.** Breaking Bricks three ways first showed
+`port exited 1` for every case, and one of the three edits had left a name undefined, so that failure proved nothing about
+`verify`. Read the reason for each failure: a broken port should fail with `trace differs at ...` or a tape count, not an
+error from the edit itself.
+
 **`in` found keys the port never printed.** `firstDiff` checked `k in a`, which is true for inherited names, so a port
 that printed a `constructor` key was reported as `.constructor: undefined != 1` instead of a missing key. Check own keys
 with `Object.hasOwn`; `test/compare.test.mjs` covers it.
