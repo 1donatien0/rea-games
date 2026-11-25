@@ -1,0 +1,9 @@
+{
+  "name": "canvas-bird",
+  "title": "Canvas Bird",
+  "original": { "repo": "canvas-bird (vendored)", "license": "MIT", "path": "originals/canvas-bird" },
+  "record": "record.mjs",
+  "ports": {
+    "web": { "cmd": ["node", "ports/web/run.mjs"], "play": "ports/web/index.html" }
+  }
+}
