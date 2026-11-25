@@ -1,11 +1,9 @@
 <p align="center">
-  <img src="docs/assets/logo.png" width="140" height="140" alt="rea-game: a pixel game controller and its recorded twin">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/logo-dark.svg">
+    <img src="docs/brand/logo-light.svg" width="400" alt="rea-game">
+  </picture>
 </p>
-
-<h1 align="center">rea-game</h1>
-
-<p align="center"><b>Reverse-engineer any game, rebuild it in any engine, and prove the rebuild plays the same.</b><br>
-It runs the original, records what it does, and checks every rebuild against that recording, frame by frame.</p>
 
 <p align="center"><sub>Made in Türkiye 🇹🇷 by <a href="https://github.com/erkamyaman">erKam Yaman</a> · <a href="https://github.com/sponsors/erkamyaman">❤️ Sponsor me</a> · <a href="#sponsors">Sponsors</a> · <a href="LICENSE">MIT</a><br>Sponsored by <a href="https://coderabbit.link/er-kam"><img src="docs/assets/brands/coderabbit.png" width="22" height="22" align="absmiddle" alt=""> <b>CodeRabbit</b></a></sub></p>
 
