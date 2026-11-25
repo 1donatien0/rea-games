@@ -21,3 +21,9 @@ colour.
 
 **A check that cannot fail looks like a pass.** After a port is green, break it three ways (a constant, a branch, an
 offset) and watch `verify` fail each time; otherwise the cases may not reach the code you think they do.
+
+**The bundler dropped every name after the first in a multi-name export.** `export const W = 10, H = 20;` came out of
+`scripts/bundle.mjs` as a module returning `W` only, so `docs/play/blocks.html` read `H` as `undefined` and the board
+never drew its settled cells or grid lines. `verify` stayed green because it replays the logic, not the published page.
+`scripts/exported-names.mjs` keeps every binding (commas count only at depth zero) and `node --test scripts/*.test.mjs`
+checks it; after regenerating `docs/play/`, open the changed pages and look at them.
