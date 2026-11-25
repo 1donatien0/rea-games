@@ -38,13 +38,15 @@ does it for video, [craft-anything](https://github.com/storytold/craft-anything)
 
 ## Play the rebuilds
 
-Open one file, no install. Each is written from a behavior spec (`GAME.md`), draws its own art, and passes its recording.
+In your browser, no install: **[erkamyaman.github.io/rea-games](https://erkamyaman.github.io/rea-games/)**
+
+Each is written from a behavior spec (`GAME.md`), draws its own art, and passes its recording.
 
 | Game | Original | Play | Verified |
 |---|---|---|---|
-| 2048 | [gabrielecirulli/2048](https://github.com/gabrielecirulli/2048), MIT | `docs/play/2048.html` | 19 cases, 24,044 inputs: web, Godot and Rust (Bevy) ports |
-| Dino | Chrome's offline dinosaur ([copy](https://github.com/wayou/t-rex-runner), BSD-3) | `docs/play/dino.html` | 29 cases, 63,000 frames: web, Godot and Rust (Bevy) ports |
-| Canvas Bird | [giotiskl/Canvas-Bird](https://github.com/giotiskl/Canvas-Bird), MIT | `docs/play/canvas-bird.html` | 30 cases, 68,409 frames: web, Godot and Rust (Bevy) ports |
+| 2048 | [gabrielecirulli/2048](https://github.com/gabrielecirulli/2048), MIT | [play it](https://erkamyaman.github.io/rea-games/play/2048.html) | 19 cases, 24,044 inputs: web, Godot and Rust (Bevy) ports |
+| Dino | Chrome's offline dinosaur ([copy](https://github.com/wayou/t-rex-runner), BSD-3) | [play it](https://erkamyaman.github.io/rea-games/play/dino.html) | 29 cases, 63,000 frames: web, Godot and Rust (Bevy) ports |
+| Canvas Bird | [giotiskl/Canvas-Bird](https://github.com/giotiskl/Canvas-Bird), MIT | [play it](https://erkamyaman.github.io/rea-games/play/canvas-bird.html) | 30 cases, 68,409 frames: web, Godot and Rust (Bevy) ports |
 
 ## How it works
 
