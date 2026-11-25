@@ -1,0 +1,6 @@
+; Engine configuration file. Headless runner for the rea-games check; the playable game is ../web.
+config_version=5
+
+[application]
+config/name="rea-2048"
+run/main_scene="res://main.tscn"
