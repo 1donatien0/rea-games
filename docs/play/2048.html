@@ -43,6 +43,7 @@
 </main>
 <script>
 (() => {
+const __mod0 = (() => {
 // 2048, written from games/2048/GAME.md. Cells are stored as cells[x][y] (column first),
 // the same layout the recording uses, so snapshots compare directly.
 const SIZE = 4;
@@ -148,8 +149,10 @@ class Game2048 {
   }
 }
 
+return { SIZE, Game2048 };
+})();
 
-
+const { Game2048, SIZE } = __mod0;
 const game = new Game2048();
 const board = document.getElementById("board");
 const cells = [];

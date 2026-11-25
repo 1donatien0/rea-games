@@ -20,6 +20,7 @@
 <p><b>Tap</b>, click or press <b>Space</b> to flap. Pass the pipes. Best: <b id="best">0</b></p>
 <script>
 (() => {
+const __mod0 = (() => {
 // Canvas Bird, rebuilt from games/canvas-bird/GAME.md. Pure logic: no DOM, no clock, no Math.random.
 // createBird({ rng }) takes a random source and returns a game that advances one rendered frame per
 // step({ dt, click }) and returns that frame's draw list (the strings described in driver.mjs).
@@ -165,8 +166,10 @@ function createBird({ rng, start = T0 }) {
   };
 }
 
+return { T0, createBird };
+})();
 
-
+const { createBird } = __mod0;
 const W = 640, H = 480;
 const cv = document.getElementById("c");
 const ctx = cv.getContext("2d");
