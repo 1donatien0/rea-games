@@ -1,0 +1,8 @@
+[package]
+name = "bird-core"
+version = "0.1.0"
+edition = "2021"
+description = "Canvas Bird rules in plain Rust, written from GAME.md and checked against the recording of the original"
+license = "MIT"
+
+[dependencies]
