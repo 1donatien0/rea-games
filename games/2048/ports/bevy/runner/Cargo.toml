@@ -1,0 +1,9 @@
+[package]
+name = "game2048-runner"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[dependencies]
+game2048-core = { path = "../core" }
+serde_json = "1"

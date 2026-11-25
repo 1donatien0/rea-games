@@ -15,19 +15,6 @@
       ],
       "play": "ports/web/index.html"
     },
-    "rust": {
-      "build": [
-        "cargo",
-        "build",
-        "--release",
-        "--quiet",
-        "--manifest-path",
-        "ports/rust/Cargo.toml"
-      ],
-      "cmd": [
-        "ports/rust/target/release/rea-2048"
-      ]
-    },
     "godot": {
       "cmd": [
         "godot",
@@ -36,6 +23,21 @@
         "ports/godot",
         "--script",
         "runner.gd"
+      ]
+    },
+    "bevy": {
+      "build": [
+        "cargo",
+        "build",
+        "--release",
+        "--quiet",
+        "--manifest-path",
+        "ports/bevy/Cargo.toml",
+        "-p",
+        "game2048-runner"
+      ],
+      "cmd": [
+        "ports/bevy/target/release/game2048-runner"
       ]
     }
   }

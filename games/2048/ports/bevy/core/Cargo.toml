@@ -1,0 +1,8 @@
+[package]
+name = "game2048-core"
+version = "0.1.0"
+edition = "2021"
+description = "2048 rules in plain Rust, written from GAME.md and checked against the recording of the original"
+license = "MIT"
+
+[dependencies]
