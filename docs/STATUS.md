@@ -8,7 +8,7 @@ was written (Linux container, Node 22, Chromium from Playwright). Nothing here w
 | Game | Port | Cases | Inputs / frames | Result |
 |---|---|---|---|---|
 | 2048 | web (JS) | 19 | 24,044 inputs | all identical |
-| 2048 | Rust | 19 | 24,044 inputs | all identical |
+| 2048 | Rust (`game2048-core` through `game2048-runner`) | 19 | 24,044 inputs | all identical |
 | 2048 | Godot 4.4.1 (GDScript, headless) | 19 | 24,044 inputs | all identical |
 | Dino | web (JS) | 29 | 63,000 frames | all identical, exact comparison |
 | Dino | Godot 4.4.1 (GDScript, headless) | 29 | 63,000 frames | all identical, exact comparison |
@@ -31,6 +31,10 @@ other seeds for clouds, stars and blinking; traces and tapes were identical.
 `docs/play/*.html` are single files made by `node scripts/bundle.mjs`. 2048 was opened from `file://` in headless
 Chromium without console errors and played a few moves. Dino and Canvas Bird pages were loaded at desktop and phone width
 by their authors with no errors; they have not been played by a person.
+
+## 2048 Bevy port
+
+`game2048-core` through `game2048-runner` is verified (spawn odds 0.9 to 0.8: 3 of 19 pass; win threshold 2048 to 4096: 16 of 19 pass). The Bevy window (0.19, 2D) compiles, and a screenshot taken under Xvfb with software rendering shows the board and tile numbers. Keys, swipe, restart and keep-playing were not tried, and the tile colours follow the original's palette (MIT, see `NOTICE`) rather than the web port's own. This port replaced the earlier plain-Rust 2048 runner, which had the same logic and no window.
 
 ## Dino engine ports: what is and is not proven
 
