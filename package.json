@@ -1,9 +1,51 @@
 {
   "name": "rea-game",
-  "version": "0.1.0",
-  "description": "Reverse-engineer any game: record the original's behavior, rebuild it in any engine, prove it matches.",
-  "type": "module",
-  "bin": { "rea-game": "bin/rea-game.mjs" },
+  "version": "1.0.0",
+  "description": "Reverse-engineer any game: record the original's behavior, rebuild it in any engine, and prove the rebuild plays the same, frame by frame.",
+  "keywords": [
+    "game",
+    "reverse-engineering",
+    "clean-room",
+    "port",
+    "godot",
+    "rust",
+    "web",
+    "claude-code",
+    "agent-skill",
+    "verification"
+  ],
+  "homepage": "https://github.com/erkamyaman/rea-game#readme",
+  "bugs": {
+    "url": "https://github.com/erkamyaman/rea-game/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erkamyaman/rea-game.git"
+  },
+  "author": "Erkam Yaman (https://github.com/erkamyaman)",
+  "funding": "https://github.com/sponsors/erkamyaman",
   "license": "MIT",
-  "scripts": { "verify": "node bin/rea-game.mjs verify all", "test": "node bin/rea-game.mjs verify all" }
+  "type": "module",
+  "bin": {
+    "rea-game": "bin/rea-game.mjs"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "games/",
+    "originals/",
+    "skills/",
+    ".claude-plugin/",
+    "NOTICE",
+    "DECISIONS.md",
+    "!games/*/ports/rust/target/",
+    "!games/*/ports/**/node_modules/"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "verify": "node bin/rea-game.mjs verify all",
+    "test": "node bin/rea-game.mjs verify all"
+  }
 }

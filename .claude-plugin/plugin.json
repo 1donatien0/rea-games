@@ -1,6 +1,6 @@
 {
   "name": "rea-game",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Reverse-engineer a game's behavior, rebuild it in any engine, and prove the rebuild matches the original frame by frame.",
   "author": { "name": "rea-game contributors" },
   "license": "MIT",
