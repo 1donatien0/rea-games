@@ -1,0 +1,16 @@
+rea-games itself is MIT licensed (see LICENSE).
+
+The folder originals/ holds unmodified copies of the open-source games that the recordings are made from.
+They stay under their own licences, and each folder keeps its licence file:
+
+  originals/2048          2048, (c) 2014 Gabriele Cirulli, MIT        https://github.com/gabrielecirulli/2048
+  originals/dino          t-rex-runner (a copy of Chromium's offline
+                          dinosaur game), BSD-3-Clause                https://github.com/wayou/t-rex-runner
+  originals/canvas-bird   Canvas Bird, (c) 2016 Yiotis Kaltsikis, MIT https://github.com/giotiskl/Canvas-Bird
+
+The rebuilds in games/*/ports are written from the behavior specs in games/*/GAME.md. They use none of the originals'
+code, art or sound. The names 2048 and "Dino" describe the games being studied; this project is not affiliated with
+their authors or with Google.
+
+The recordings (games/*/cases) are measurements of how the originals behave: input lists, random numbers and
+resulting game states.

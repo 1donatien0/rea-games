@@ -1,0 +1,9 @@
+{
+  "name": "rea-games",
+  "version": "0.1.0",
+  "description": "Reverse-engineer any game: record the original's behavior, rebuild it in any engine, prove it matches.",
+  "type": "module",
+  "bin": { "rea-games": "bin/rea-games.mjs" },
+  "license": "MIT",
+  "scripts": { "verify": "node bin/rea-games.mjs verify all", "test": "node bin/rea-games.mjs verify all" }
+}
