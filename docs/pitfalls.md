@@ -64,3 +64,5 @@ blank and version lines is not enough, because the last two lines are then stack
 right either, because a port may log an error before the one that ends it. `crashReason` starts from the last message
 line and adds the first frame of the stack under it. Check a message taken from another program's output against what it
 really prints.
+
+**Third-party libraries can consume `Math.random()` before the game starts.** jQuery 1.8.3 calls `Math.random()` twice during initialization, which prepended two stray draws to `tape` and shifted every mine placement. Reset the RNG tape after page load finishes so `tape` records only calls from the game itself.
