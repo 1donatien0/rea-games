@@ -41,3 +41,8 @@ test("a list that re-exports from another module adds no name", () => {
   assert.deepEqual(exportedNames('export { A } from "./x.mjs";\n'), []);
   assert.deepEqual(exportedNames('export { A }\n  from "./x.mjs";\n'), []);
 });
+
+test("comments inside an export list are not part of a name", () => {
+  assert.deepEqual(exportedNames("const B = 2;\nexport { B/* note */as D };\n"), ["D: B"]);
+  assert.deepEqual(exportedNames("const A = 1, B = 2;\nexport {\n  A // first\n  , B\n};\n"), ["A", "B"]);
+});

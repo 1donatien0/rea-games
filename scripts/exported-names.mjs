@@ -19,7 +19,7 @@ export function exportedNames(src) {
     for (const [at, name] of bindings(src, m.index + m[0].length)) found.push([at, name]);
   }
   for (const m of src.matchAll(EXPORT_LIST)) {
-    for (const item of m[1].split(",").map((x) => x.trim()).filter(Boolean)) {
+    for (const item of m[1].replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, " ").split(",").map((x) => x.trim()).filter(Boolean)) {
       const [local, , exported = local] = item.split(/\s+(as)\s+/);
       found.push([m.index, exported === local ? local : `${exported}: ${local}`]);
     }
